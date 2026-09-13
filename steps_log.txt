@@ -1,0 +1,65 @@
+WALMART_Data_Engineering - Setup Steps
+======================================
+
+1. Repository inspection
+	- Confirmed the project root and Git repository.
+	- Confirmed the source directory is src/.
+	- Confirmed the local Python virtual environment is .venv/.
+
+2. Git ignore configuration
+	- Added .gitignore at the project root.
+	- Ignored Python virtual environments: .venv/, venv/, and env/.
+	- Ignored local secrets and environment files, while allowing .env.example.
+	- Ignored Python cache files, test caches, logs, reports, ETL data files,
+	  operating-system files, and local VS Code settings.
+	- Verified that .venv/ and .env are ignored with git check-ignore.
+
+3. Environment configuration
+	- Kept real database credentials in the local .env file.
+	- Added .env.example with placeholder values for: 
+	- The .env file must not be committed to Git.
+
+4. Project package structure
+	- Added src/config/__init__.py for configuration modules.
+	- Added src/utils/__init__.py for shared utility modules.
+
+5. PostgreSQL dependency setup
+	- Added requirements.txt at the project root.
+	- Added psycopg2-binary==2.9.9 for PostgreSQL connections.
+	- Added python-dotenv==1.0.1 for loading values from .env.
+	- Installed dependencies with:
+		 pip install -r requirements.txt
+
+6. Database connection module
+	- Added src/config/database.py.
+	- Loads environment variables using python-dotenv.
+	- Builds DB_CONFIG from the NEON_* variables.
+	- Added get_connection() to open a PostgreSQL connection.
+	- Added test_connection() to check connectivity and close the connection.
+	- Logs successful and failed connection attempts.
+
+7. Logging setup
+	- Added src/utils/logger.py.
+	- Added get_logger() for reusable application logging.
+	- Configured INFO logging by default, with optional LOG_LEVEL support.
+	- Logs are written to logs/application.log and displayed in the console.
+	- The logs directory and log files are ignored by Git.
+
+8. Validation completed
+	- Imported the database module successfully.
+	- Confirmed the database logger is initialized as src.config.database.
+	- Compiled database.py and logger.py with Python successfully.
+	- Confirmed the generated logs directory is present.
+
+9. Next step
+	- Replace the placeholder values in the local .env with the actual Neon
+	  PostgreSQL connection details.
+	- Run test_connection() only after the database credentials are available.
+
+10. Python package execution
+	- Added src/__init__.py so src is an explicit Python package.
+	- Run the database module from the project root with:
+	    python -m src.config.database
+	- Do not run database.py directly with the Python file path, because that
+	  removes the project root from the package import context and causes
+	  ModuleNotFoundError: No module named 'src'.

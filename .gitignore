@@ -1,0 +1,32 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example 
+
+
+
+# Python generated files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+ 
+
+
+# Logs and local reports
+*.log
+reports/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Local editor configuration
+.vscode/
